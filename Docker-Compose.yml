@@ -1,24 +1,6 @@
 version: "3.8"
 services:
- 
-    quotemng:
-        hostname: quotemng
-        build: .
-        image: quotemanager
-        container_name: quotemng
-        environment:
-            - stockManagerUrl=stockmng
-            - quoteManagerUrl=quotemng
-            - databaseUrl=mysql
-            - SPRING_PROFILES_ACTIVE=prod
-        ports:
-            - "8081:8081"
-        networks:
-            - connection1
-        depends_on:
-            - stockmng
-            - mysql
-    
+            
     mysql:
         hostname: mysql
         image: mysql:8
@@ -41,7 +23,25 @@ services:
             - "8080:8080"
         networks:
             - connection1
-    
+
+    quotemng:
+        hostname: quotemng
+        build: .
+        image: quotemanager
+        container_name: quotemng
+        environment:
+            - stockManagerUrl=stockmng
+            - quoteManagerUrl=quotemng
+            - databaseUrl=mysql
+            - SPRING_PROFILES_ACTIVE=prod
+        ports:
+            - "8081:8081"
+        networks:
+            - connection1
+        depends_on:
+            - mysql
+            - stockmng
+            
 
 networks:
     connection1:
